@@ -44,7 +44,7 @@ int main() {
     int status;
     int master_fd;
     pid_t pid;
-    char *args[] = {"/usr/local/bin/ash", NULL};
+    char *args[] = {"/bin/zsh", NULL};
     char buf[256];
 
     // Fork a child process and connect it to the pseudo-terminal
@@ -68,9 +68,9 @@ int main() {
             break;
         }
 
-        int fd = open("output", O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+        FILE *fd = fopen("output", "ab+");
 
-        write(fd, buf, nread);
+        fprintf(fd, "%s\n", buf);
     }
 
     // Wait for the child process to exit

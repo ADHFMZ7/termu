@@ -12,16 +12,21 @@ SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 
 # Targets
-TARGET = $(BUILD_DIR)/program
+TARGET = $(BUILD_DIR)/termu
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(BUILD_DIR):
+	mkdir -p $@
+
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -rf $(BUILD_DIR)
+
+.PHONY: all clean
 
