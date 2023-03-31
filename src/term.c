@@ -76,7 +76,6 @@ int main() {
     flags |= O_NONBLOCK;
     fcntl(master_fd, F_SETFL, flags);
 
-    // Parent process - read from the pseudo-terminal and print the output
     int nread;
     FILE *fd = fopen("output", "ab+");
 
