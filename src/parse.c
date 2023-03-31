@@ -55,19 +55,19 @@ void parse_ansi_code(char* ansi_input) {
     }
 }
 
-int main() {
-    char str[] = "`@�"
-    "[1m[7m%[27m[1m[0m"                                                                              
-    "�Ҩ��"
-    "]7;file://Anthonys-Air-5/Users/anthonyjarjour/Desktop/termu"                                    
-    "�Ҩ��"
-    "[0m[27m[24m[J(base) anthonyjarjour@Anthonys-Air-5 termu % [K[?2004h";                      
-    // "�Ҩ��";
-
-    printf("Given '%s', this is what is parsed: \n\n", str);
-
-    parse_ansi_code(str);
-    printf("\n");
-    
-    return 0;
-}
+// int main() {
+//     char str[] = "`@�"
+//     "[1m[7m%[27m[1m[0m"                                                                              
+//     "�Ҩ��"
+//     "]7;file://Anthonys-Air-5/Users/anthonyjarjour/Desktop/termu"                                    
+//     "�Ҩ��"
+//     "[0m[27m[24m[J(base) anthonyjarjour@Anthonys-Air-5 termu % [K[?2004h";                      
+//     // "�Ҩ��";
+//
+//     printf("Given '%s', this is what is parsed: \n\n", str);
+//
+//     parse_ansi_code(str);
+//     printf("\n");
+//     
+//     return 0;
+// }

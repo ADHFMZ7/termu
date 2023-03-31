@@ -29,7 +29,7 @@
 //  }
 
 
-#define _DEFAULT_SOURCE
+#define _BSD_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +39,6 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
-#include <errno.h>
 
 #ifdef __linux__
 #include <pty.h>
@@ -71,42 +70,35 @@ int main() {
         exit(1);
     }
 
-    // Set the master_fd to non-blocking mode
-    int flags = fcntl(master_fd, F_GETFL);
-    flags |= O_NONBLOCK;
-    fcntl(master_fd, F_SETFL, flags);
-
     // Parent process - read from the pseudo-terminal and print the output
-    int nread;
+    int nread; 
     FILE *fd = fopen("output", "ab+");
 
-    // Send some commands to the shell and print the output
+
+    //while ((nread = read(master_fd, buf, sizeof(buf) - 1)) > 0) {
     for (int i = 0; i < 10; i++) {
         buf[0] = 'l';
         buf[1] = 's';
         buf[2] = '\n';
         buf[3] = '\0';
-
         // send the input to the shell
-        write(master_fd, buf, strlen(buf));
+        write(master_fd, buf, 4);
 
+        usleep(500000);
         // read the output from the shell
-        while ((nread = read(master_fd, buf, sizeof(buf) - 1)) > 0) {
-            buf[nread] = '\0';  // null-terminate the buffer
-            fprintf(fd, "The text returned: %s\n", buf);
-        }
+        nread = read(master_fd, buf, sizeof(buf) - 1);
+        buf[nread] = '\0';  // null-terminate the buffer
+        //
+        fprintf(fd, "The text returned: %s\n", buf);
 
-        if (nread == -1 && errno != EAGAIN) {
-            perror("read");
-            break;
-        }
-
-        usleep(100000);  // sleep for 100 milliseconds
     }
-
     fclose(fd);
 
     // Wait for the child process to exit
     waitpid(pid, &status, 0);
+
+
 }
+
+
 
