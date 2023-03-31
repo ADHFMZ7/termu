@@ -1,10 +1,19 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
-#include <util.h>
 #include <termios.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+
+
+#ifdef __linux__
+#include <pty.h>
+#endif
+
+#ifdef __APPLE__
+#include <util.h>
+#endif
+
 
 // int main() {
 
@@ -44,7 +53,7 @@ int main() {
     int status;
     int master_fd;
     pid_t pid;
-    char *args[] = {"/bin/zsh", NULL};
+    char *args[] = {"/bin/bash", NULL};
     char buf[256];
 
     // Fork a child process and connect it to the pseudo-terminal
@@ -70,7 +79,9 @@ int main() {
 
         FILE *fd = fopen("output", "ab+");
 
+
         fprintf(fd, "%s\n", buf);
+	fclose(fd);
     }
 
     // Wait for the child process to exit

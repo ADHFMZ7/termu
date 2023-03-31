@@ -44,13 +44,13 @@ void parse_ansi_code(char* ansi_input) {
     }
 }
 
-int main() {
-    char str[] = "Hello\x1b[1;31mworld\x1b[0m!";
-
-    printf("Given '%s', this is what is parsed: \n\n", str);
-
-    parse_ansi_code(str);
-    printf("\n");
-    
-    return 0;
-}
+// int main() {
+//     char str[] = "Hello\x1b[1;31mworld\x1b[0m!";
+//
+//     printf("Given '%s', this is what is parsed: \n\n", str);
+//
+//     parse_ansi_code(str);
+//     printf("\n");
+//     
+//     return 0;
+// }
