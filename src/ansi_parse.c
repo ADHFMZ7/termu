@@ -1,20 +1,30 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> 
+#include <ctype.h>
+
 
 void parse_ansi_code(char* ansi_input) {
     char string_of_codes[50];
+    int code_counter = 0;
 
     for (int i = 0; ansi_input[i] != '\0'; i++) {
         if (ansi_input[i] == '\x1b' && ansi_input[i + 1] == '[') {
             printf("\n\n");
 
-            i += 2; 
+            i += 1; 
+            
             string_of_codes[0] = '\0';
 
-            while (ansi_input[i] != 'm') { 
+            while (ansi_input[i + 1] != '\0' && isalpha(ansi_input[i]) == 0 && ansi_input[i] != '\a') { 
                 char temp[2] = {ansi_input[i], '\0'};
                 strcat(string_of_codes, temp);
+                
+                if( isalpha(ansi_input[i + 1]) != 0){
+                    char temp_terminate[2] = {ansi_input[i + 1], '\0'};
+                    strcat(string_of_codes, temp_terminate);
+                }
+
                 i++;
             }
 
@@ -30,7 +40,8 @@ void parse_ansi_code(char* ansi_input) {
             }
 
             for (j = 0; j < size; ++j){ 
-                printf("Code #%d: %s\n", j + 1, code_array[j]);
+                printf("Code #%d: %s\n", code_counter, code_array[j]);
+                code_counter++;
             }
 
             printf("\n");
@@ -44,13 +55,19 @@ void parse_ansi_code(char* ansi_input) {
     }
 }
 
-// int main() {
-//     char str[] = "Hello\x1b[1;31mworld\x1b[0m!";
-//
-//     printf("Given '%s', this is what is parsed: \n\n", str);
-//
-//     parse_ansi_code(str);
-//     printf("\n");
-//     
-//     return 0;
-// }
+int main() {
+    char str[] = "`@�"
+    "[1m[7m%[27m[1m[0m"                                                                              
+    "�Ҩ��"
+    "]7;file://Anthonys-Air-5/Users/anthonyjarjour/Desktop/termu"                                    
+    "�Ҩ��"
+    "[0m[27m[24m[J(base) anthonyjarjour@Anthonys-Air-5 termu % [K[?2004h";                      
+    // "�Ҩ��";
+
+    printf("Given '%s', this is what is parsed: \n\n", str);
+
+    parse_ansi_code(str);
+    printf("\n");
+    
+    return 0;
+}
