@@ -2,44 +2,43 @@
 #include <string.h>
 #include <stdlib.h> 
 
-void parseAnsiCode(char* ansiInput) {
-    int len = strlen(ansiInput);
-    char stringOfCodes[50];
+void parse_ansi_code(char* ansi_input) {
+    char string_of_codes[50];
 
-    for (int i = 0; i < len; i++) {
-        if (ansiInput[i] == '\x1b' && ansiInput[i + 1] == '[') {
+    for (int i = 0; ansi_input[i] != '\0'; i++) {
+        if (ansi_input[i] == '\x1b' && ansi_input[i + 1] == '[') {
             printf("\n\n");
 
             i += 2; 
-            stringOfCodes[0] = '\0';
+            string_of_codes[0] = '\0';
 
-            while (ansiInput[i] != 'm') { 
-                char temp[2] = {ansiInput[i], '\0'};
-                strcat(stringOfCodes, temp);
+            while (ansi_input[i] != 'm') { 
+                char temp[2] = {ansi_input[i], '\0'};
+                strcat(string_of_codes, temp);
                 i++;
             }
 
-            char *delimter = strtok(stringOfCodes, ";");
-            char **codeArray = NULL;
+            char *delimter    = strtok(string_of_codes, ";");
+            char **code_array = NULL;
             int j = 0, size = 0;
 
             while (delimter != NULL){
-                codeArray = (char **)realloc(codeArray, (size + 1) * sizeof(char *));
-                codeArray[j++] = delimter;
+                code_array = (char **)realloc(code_array, (size + 1) * sizeof(char *));
+                code_array[j++] = delimter;
                 size++;
                 delimter = strtok(NULL, ";");
             }
 
             for (j = 0; j < size; ++j){ 
-                printf("Code #%d: %s\n", j + 1, codeArray[j]);
+                printf("Code #%d: %s\n", j + 1, code_array[j]);
             }
 
             printf("\n");
-            free(codeArray);
+            free(code_array);
         }
 
         else {
-            printf("%c", ansiInput[i]); 
+            printf("%c", ansi_input[i]); 
         }
         
     }
@@ -50,7 +49,7 @@ int main() {
 
     printf("Given '%s', this is what is parsed: \n\n", str);
 
-    parseAnsiCode(str);
+    parse_ansi_code(str);
     printf("\n");
     
     return 0;
