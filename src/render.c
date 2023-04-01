@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
 #define FONT_SIZE 12 
+#define SCREEN_WIDTH 80*FONT_SIZE
+#define SCREEN_HEIGHT 15*FONT_SIZE*3
 #define BUFSIZE SCREEN_WIDTH/FONT_SIZE
 
 int main() {
