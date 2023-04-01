@@ -1,7 +1,7 @@
 # Compiler options
 CC = gcc
 CFLAGS = -std=c99 -Wall -Wextra -pedantic
-LDFLAGS = -lSDL2
+LDFLAGS = -lSDL2 -lSDL2_ttf
 
 # Directories
 SRC_DIR = src
