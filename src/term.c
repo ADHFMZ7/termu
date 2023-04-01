@@ -1,34 +1,3 @@
-// #include <SDL2/SDL.h>
-// #include <stdlib.h>
-// #include <termios.h>
-// #include <sys/types.h>
-// #include <sys/ioctl.h>
-// #include <termios.h>
-//
-//
-//
-//
-//  int main() {
-//
-//      if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
-// 	printf("SDL initialization failed: %s\n", SDL_GetError());
-// 	exit(EXIT_FAILURE);
-//      };
-//
-//      SDL_Window *window = SDL_CreateWindow("My Window",
-//          SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-//          640, 480, SDL_WINDOW_SHOWN);
-//
-//      if (!window) {
-// 	printf("Window creation failed: %s\n", SDL_GetError());
-// 	return 1;
-//      }
-//      //forkpty(int *, char *, struct termios *, struct winsize *)
-//      SDL_Quit();
-//
-//  }
-
-
 #define _DEFAULT_SOURCE
 
 #include <stdio.h>
@@ -92,7 +61,8 @@ int main() {
         // read the output from the shell
         while ((nread = read(master_fd, buf, sizeof(buf) - 1)) > 0) {
             buf[nread] = '\0';  // null-terminate the buffer
-            fprintf(fd, "The text returned: %s\n", buf);
+            fprintf(fd, "%s\n", buf);
+            fprintf(stdout, "%s\n", buf);
         }
 
         if (nread == -1 && errno != EAGAIN) {
@@ -109,3 +79,32 @@ int main() {
     waitpid(pid, &status, 0);
 }
 
+// #include <SDL2/SDL.h>
+// #include <stdlib.h>
+// #include <termios.h>
+// #include <sys/types.h>
+// #include <sys/ioctl.h>
+// #include <termios.h>
+//
+//
+//
+//
+//  int main() {
+//
+//      if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
+// 	printf("SDL initialization failed: %s\n", SDL_GetError());
+// 	exit(EXIT_FAILURE);
+//      };
+//
+//      SDL_Window *window = SDL_CreateWindow("My Window",
+//          SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+//          640, 480, SDL_WINDOW_SHOWN);
+//
+//      if (!window) {
+// 	printf("Window creation failed: %s\n", SDL_GetError());
+// 	return 1;
+//      }
+//      //forkpty(int *, char *, struct termios *, struct winsize *)
+//      SDL_Quit();
+//
+//  }
