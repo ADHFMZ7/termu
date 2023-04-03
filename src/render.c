@@ -9,6 +9,18 @@
 #define SCREEN_HEIGHT 15*FONT_SIZE*3
 #define BUFSIZE SCREEN_WIDTH/FONT_SIZE
 
+
+
+TTF_Font *create_font(char *font_name, int font_size) {
+    TTF_Font *font;
+    if ((font = TTF_OpenFont("/Users/ahmad/Library/Fonts/Roboto Mono Medium for Powerline.ttf", FONT_SIZE)) == NULL) {
+        fprintf(stderr, "Font could not be loaded! SDL_ttf Error: %s\n", TTF_GetError());
+        exit(EXIT_FAILURE);
+    }
+    return font;
+}
+
+
 int main() {
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
@@ -38,12 +50,6 @@ int main() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == NULL) {
         fprintf(stderr, "Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    font = TTF_OpenFont("/Users/ahmad/Library/Fonts/Roboto Mono Medium for Powerline.ttf", FONT_SIZE);
-    if (font == NULL) {
-        fprintf(stderr, "Font could not be loaded! SDL_ttf Error: %s\n", TTF_GetError());
         return 1;
     }
 
